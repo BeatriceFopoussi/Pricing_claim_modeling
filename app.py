@@ -231,7 +231,7 @@ img = find_image([BASE, ASSETS])
 # ─── SIDEBAR ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     if img:
-        st.image(img, use_container_width=True)
+        st.image(img, width="stretch")
     st.markdown("## MTPL Pricing Dashboard")
     st.markdown("**French Motor MTPL**")
     st.markdown("Actuarial Data Science")
@@ -303,7 +303,7 @@ with t1:
     if img:
         col_img, col_txt = st.columns([2, 3])
         with col_img:
-            st.image(img, use_container_width=True, caption="French Motor MTPL — Actuarial Pricing")
+            st.image(img, width="stretch", caption="French Motor MTPL — Actuarial Pricing")
         with col_txt:
             st.markdown("""
 ### Project Goal
@@ -415,7 +415,7 @@ with t2:
                 if show_log:
                     fig.update_yaxes(type="log")
                 fig.update_layout(**LAYOUT, title_x=0.5, height=380)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
                 s = df[var].describe()
                 r1,r2,r3,r4 = st.columns(4)
@@ -430,7 +430,7 @@ with t2:
                               color_discrete_sequence=[C["blue"]],
                               title=f"Distribution of {var}")
                 fig1.update_layout(**LAYOUT, title_x=0.5, height=280)
-                st.plotly_chart(fig1, use_container_width=True)
+                st.plotly_chart(fig1, width="stretch")
 
                 fc = (df.groupby(var, observed=True)
                       .agg(nb=("ClaimNb","sum"), ex=("Exposure","sum"))
@@ -443,7 +443,7 @@ with t2:
                               title=f"Annualized Claim Frequency by {var}")
                 fig2.update_layout(**LAYOUT, title_x=0.5, height=280,
                                    coloraxis_showscale=False)
-                st.plotly_chart(fig2, use_container_width=True)
+                st.plotly_chart(fig2, width="stretch")
 
 # ═══════════════════════════════════════════════════════════════════
 # TAB 3 — BIVARIATE
@@ -478,7 +478,7 @@ with t3:
             height=420,
         )
         fig_biv.update_layout(**LAYOUT, title_x=0.5)
-        st.plotly_chart(fig_biv, use_container_width=True)
+        st.plotly_chart(fig_biv, width="stretch")
 
         st.divider()
         st.markdown("#### BonusMalus Score vs Claim Frequency")
@@ -506,7 +506,7 @@ with t3:
         fig_bm.update_layout(**LAYOUT, title="Claim Frequency by BonusMalus Score",
                              xaxis_title="BonusMalus", yaxis_title="Annualized Frequency",
                              title_x=0.5, height=350)
-        st.plotly_chart(fig_bm, use_container_width=True)
+        st.plotly_chart(fig_bm, width="stretch")
 
         st.divider()
         st.markdown("#### Driver Age vs Claim Frequency")
@@ -527,7 +527,7 @@ with t3:
         fig_age.update_layout(**LAYOUT, title="Claim Frequency by Driver Age",
                               xaxis_title="Driver Age", yaxis_title="Annualized Frequency",
                               title_x=0.5, height=320)
-        st.plotly_chart(fig_age, use_container_width=True)
+        st.plotly_chart(fig_age, width="stretch")
 
 # ═══════════════════════════════════════════════════════════════════
 # TAB 4 — FREQUENCY BENCHMARK
@@ -585,7 +585,7 @@ with t4:
             fig_imp.update_layout(**LAYOUT, title="Actuarial Improvement Index",
                                   xaxis_title="Improvement Index (%)",
                                   height=400, title_x=0.5)
-            st.plotly_chart(fig_imp, use_container_width=True)
+            st.plotly_chart(fig_imp, width="stretch")
 
         with r:
             gdf = bdf.dropna(subset=["Gini"])
@@ -600,7 +600,7 @@ with t4:
                 fig_gini.update_layout(**LAYOUT, title="Gini Index by Model",
                                        xaxis_title="Gini Index",
                                        height=400, title_x=0.5)
-                st.plotly_chart(fig_gini, use_container_width=True)
+                st.plotly_chart(fig_gini, width="stretch")
             else:
                 st.info("Run notebooks to compute Gini Index.")
 
@@ -611,7 +611,7 @@ with t4:
             display_bdf.style
             .background_gradient(subset=["Index %"], cmap="YlGn")
             .format({"Deviance":"{:.4f}", "Gini":"{:.4f}", "Index %":"{:.1f}"}),
-            use_container_width=True, height=320,
+            width="stretch", height=320,
         )
 
 # ═══════════════════════════════════════════════════════════════════
@@ -656,7 +656,7 @@ with t5:
             ))
             fig_aic.update_layout(**LAYOUT, title="AIC — Log-Normal vs Gamma",
                                   yaxis_title="AIC (lower = better)", height=320, title_x=0.5)
-            st.plotly_chart(fig_aic, use_container_width=True)
+            st.plotly_chart(fig_aic, width="stretch")
         with r_dist:
             ks_stat = sev_m.get("ks_stat_gamma", None)
             ks_p    = sev_m.get("ks_p_gamma", None)
@@ -682,7 +682,7 @@ with t5:
                  if os.path.exists(os.path.join(FIG,v))}
     if sev_found:
         sel_dist = st.selectbox("View diagnostic figure", list(sev_found.keys()), key="sev_fig")
-        st.image(sev_found[sel_dist], use_container_width=True)
+        st.image(sev_found[sel_dist], width="stretch")
 
     st.divider()
 
@@ -729,7 +729,7 @@ with t5:
                 fig_sdev.update_layout(**LAYOUT, title="Gamma Deviance (lower = better)",
                                        xaxis_title="Gamma Deviance",
                                        height=300, title_x=0.5)
-                st.plotly_chart(fig_sdev, use_container_width=True)
+                st.plotly_chart(fig_sdev, width="stretch")
 
             with sr:
                 gdf_s = sdf.dropna(subset=["Gini Index"])
@@ -744,7 +744,7 @@ with t5:
                     fig_sgini.update_layout(**LAYOUT, title="Gini Index (higher = better)",
                                             xaxis_title="Gini Index",
                                             height=300, title_x=0.5)
-                    st.plotly_chart(fig_sgini, use_container_width=True)
+                    st.plotly_chart(fig_sgini, width="stretch")
 
             st.markdown("### Full Severity Results")
             disp_sdf = sdf.drop(columns=["Color"])
@@ -752,7 +752,7 @@ with t5:
                 disp_sdf.style
                 .background_gradient(subset=["Gamma Deviance"], cmap="RdYlGn_r")
                 .format({"Gamma Deviance":"{:.6f}", "Gini Index":"{:.4f}"}),
-                use_container_width=True,
+                width="stretch",
             )
     else:
         st.info("Run `05_Severity_Modeling_CORRIGE.ipynb` to load severity benchmark.")
@@ -766,7 +766,7 @@ with t5:
         if os.path.exists(bench_fig):   extra_figs["Severity Benchmark Chart"]       = bench_fig
         if os.path.exists(nn_fig_path): extra_figs["Neural Network Learning Curve"] = nn_fig_path
         sel_extra = st.selectbox("Additional figures", list(extra_figs.keys()), key="sev_extra")
-        st.image(extra_figs[sel_extra], use_container_width=True)
+        st.image(extra_figs[sel_extra], width="stretch")
 
     st.divider()
 
@@ -775,7 +775,7 @@ with t5:
 
     pp_fig = os.path.join(FIG, "pure_premium.png")
     if os.path.exists(pp_fig):
-        st.image(pp_fig, use_container_width=True)
+        st.image(pp_fig, width="stretch")
 
     if pp_df is not None:
         pp_cols = [c for c in ["PP_GLM","PP_LGB","PP_XGB"] if c in pp_df.columns]
@@ -801,7 +801,7 @@ with t5:
                                  title="Pure Premium Distribution (capped at 99th pct)",
                                  xaxis_title="Pure Premium (EUR/yr)",
                                  barmode="overlay", height=350, title_x=0.5)
-            st.plotly_chart(fig_pp, use_container_width=True)
+            st.plotly_chart(fig_pp, width="stretch")
     else:
         st.info("Run notebook 05 to generate `pure_premium.csv`.")
 
@@ -817,10 +817,10 @@ with t5:
         cl1, cl2 = st.columns(2)
         with cl1:
             if os.path.exists(elbow_fig):
-                st.image(elbow_fig, caption="Elbow method — choosing K", use_container_width=True)
+                st.image(elbow_fig, caption="Elbow method — choosing K", width="stretch")
         with cl2:
             if os.path.exists(clust_fig):
-                st.image(clust_fig, caption="Cluster profiles & PCA projection", use_container_width=True)
+                st.image(clust_fig, caption="Cluster profiles & PCA projection", width="stretch")
 
     if clust_df is not None and pp_df is not None:
         merged = clust_df.merge(pp_df, on="IDpol", how="inner")
@@ -844,10 +844,10 @@ with t5:
                                      xaxis_title="Cluster ID",
                                      yaxis_title="Mean Pure Premium (EUR/yr)",
                                      height=320, title_x=0.5)
-                st.plotly_chart(fig_cl, use_container_width=True)
+                st.plotly_chart(fig_cl, width="stretch")
 
                 st.markdown("**Cluster Profile Summary**")
-                st.dataframe(profile, use_container_width=True)
+                st.dataframe(profile, width="stretch")
     elif clust_df is None:
         st.info("Run notebook 05 to generate cluster assignments (`client_clusters.csv`).")
 
@@ -892,7 +892,7 @@ with t6:
         disp_cols = ["Area","VehPower","VehAge","DrivAge","BonusMalus","Density","VehBrand","VehGas","Region","Exposure"]
         disp_cols = [c for c in disp_cols if c in row.index]
         st.markdown("### Policy Profile")
-        st.dataframe(pd.DataFrame([{c: row[c] for c in disp_cols}]), use_container_width=True)
+        st.dataframe(pd.DataFrame([{c: row[c] for c in disp_cols}]), width="stretch")
 
         bm  = float(row.get("BonusMalus", 100))
         age = float(row.get("DrivAge", 35))
@@ -918,7 +918,7 @@ with t6:
             ))
             fig_g.update_layout(paper_bgcolor="#f8f9fa", font_color="#212529",
                                 height=270, margin=dict(t=40,b=10,l=20,r=20))
-            st.plotly_chart(fig_g, use_container_width=True)
+            st.plotly_chart(fig_g, width="stretch")
 
         with g2:
             global_freq = df["ClaimNb"].sum() / df["Exposure"].sum()
@@ -961,7 +961,7 @@ with t6:
             fig_bm_ctx.update_layout(**LAYOUT, height=200,
                                      xaxis_title="BonusMalus",
                                      showlegend=False)
-            st.plotly_chart(fig_bm_ctx, use_container_width=True)
+            st.plotly_chart(fig_bm_ctx, width="stretch")
 
 # ═══════════════════════════════════════════════════════════════════
 # TAB 7 — EXPLAINABILITY & SHAP
@@ -1023,7 +1023,7 @@ with t7:
                 fig_cmp.update_layout(**LAYOUT, height=420,
                                       title="Poisson Deviance (lower = better)",
                                       xaxis_title="Deviance", title_x=0.5)
-                st.plotly_chart(fig_cmp, use_container_width=True)
+                st.plotly_chart(fig_cmp, width="stretch")
             with fb:
                 fig_idx = go.Figure()
                 fig_idx.add_trace(go.Bar(
@@ -1039,7 +1039,7 @@ with t7:
                 fig_idx.update_layout(**LAYOUT, height=420,
                                       title="Actuarial Improvement Index",
                                       xaxis_title="Index (%)", title_x=0.5)
-                st.plotly_chart(fig_idx, use_container_width=True)
+                st.plotly_chart(fig_idx, width="stretch")
 
             # Gini radar-like bar
             gdf_f = fdf.dropna(subset=["Gini"])
@@ -1052,7 +1052,7 @@ with t7:
                 ))
                 fig_gin.update_layout(**LAYOUT, title="Gini Index by Model (higher = better)",
                                       yaxis_title="Gini Index", height=320, title_x=0.5)
-                st.plotly_chart(fig_gin, use_container_width=True)
+                st.plotly_chart(fig_gin, width="stretch")
 
             st.markdown("**Frequency Results Table**")
             disp_f = fdf.drop(columns=["Color"])
@@ -1061,7 +1061,7 @@ with t7:
                 .background_gradient(subset=["Improvement Index %"], cmap="YlGn")
                 .format({"Poisson Deviance":"{:.5f}", "Gini":"{:.4f}",
                          "Improvement Index %":"{:.1f}"}),
-                use_container_width=True,
+                width="stretch",
             )
         else:
             st.info("Run notebooks 01–04 to generate frequency metrics.")
@@ -1096,7 +1096,7 @@ with t7:
                     ))
                     fig_sd.update_layout(**LAYOUT, title="Gamma Deviance — Severity",
                                          yaxis_title="Deviance", height=320, title_x=0.5)
-                    st.plotly_chart(fig_sd, use_container_width=True)
+                    st.plotly_chart(fig_sd, width="stretch")
                 with sb:
                     gdf_sv = sbdf.dropna(subset=["Gini Index"])
                     if not gdf_sv.empty:
@@ -1108,13 +1108,13 @@ with t7:
                         ))
                         fig_sg.update_layout(**LAYOUT, title="Gini Index — Severity",
                                              yaxis_title="Gini Index", height=320, title_x=0.5)
-                        st.plotly_chart(fig_sg, use_container_width=True)
+                        st.plotly_chart(fig_sg, width="stretch")
                 disp_sv = sbdf.drop(columns=["Color"])
                 st.dataframe(
                     disp_sv.style
                     .background_gradient(subset=["Gamma Deviance"], cmap="RdYlGn_r")
                     .format({"Gamma Deviance":"{:.6f}","Gini Index":"{:.4f}"}),
-                    use_container_width=True,
+                    width="stretch",
                 )
         else:
             st.info("Run notebook 05 to generate severity metrics.")
@@ -1138,7 +1138,7 @@ with t7:
 
         if shap_found:
             sel_shap = st.selectbox("Select SHAP figure", list(shap_found.keys()), key="shap_sel")
-            st.image(shap_found[sel_shap], use_container_width=True)
+            st.image(shap_found[sel_shap], width="stretch")
         else:
             st.info("SHAP figures not found. Run notebooks 03 and 04 — SHAP plots are saved to `fig/`.")
 
@@ -1155,7 +1155,7 @@ with t7:
 
         if relat_found:
             sel_rel = st.selectbox("Select figure", list(relat_found.keys()), key="relat_sel")
-            st.image(relat_found[sel_rel], use_container_width=True)
+            st.image(relat_found[sel_rel], width="stretch")
         else:
             st.info("Tariff relativity figures not found. Run notebooks 02 and 05.")
 
@@ -1170,7 +1170,7 @@ with t7:
                       if os.path.exists(os.path.join(FIG,v))}
         if cann_found:
             sel_cann = st.selectbox("Select figure", list(cann_found.keys()), key="cann_sel")
-            st.image(cann_found[sel_cann], use_container_width=True)
+            st.image(cann_found[sel_cann], width="stretch")
 
         # Inline CANN explanation
         with st.expander("How does SHAP work for the CANN?"):
@@ -1229,7 +1229,7 @@ The result is a SHAP value per feature per policy, showing:
                                  title=f"Observed vs GLM 3 Predicted — by {seg}",
                                  xaxis_title=seg, yaxis_title="Annualized Frequency",
                                  title_x=0.5, height=380)
-            st.plotly_chart(fig_ov, use_container_width=True)
+            st.plotly_chart(fig_ov, width="stretch")
 
             # Residual chart: (obs - pred) / pred
             sg["rel_err"] = (sg["obs_f"] - sg["pred_f"]) / sg["pred_f"].clip(lower=1e-9) * 100
@@ -1244,7 +1244,7 @@ The result is a SHAP value per feature per policy, showing:
                                   title=f"Relative Error (Observed - Predicted) / Predicted — by {seg}",
                                   xaxis_title=seg, yaxis_title="Relative Error (%)",
                                   title_x=0.5, height=300)
-            st.plotly_chart(fig_err, use_container_width=True)
+            st.plotly_chart(fig_err, width="stretch")
         else:
             st.info("Load frequency data and run notebook 02 to enable this chart.")
 
@@ -1262,7 +1262,7 @@ The result is a SHAP value per feature per policy, showing:
                        if os.path.exists(os.path.join(FIG,v))}
         if bench_found:
             sel_b = st.selectbox("Select benchmark figure", list(bench_found.keys()), key="bench_sel")
-            st.image(bench_found[sel_b], use_container_width=True)
+            st.image(bench_found[sel_b], width="stretch")
         else:
             st.info("No benchmark figures yet. Run all notebooks.")
 
@@ -1380,7 +1380,7 @@ with t8:
             cf_cols = st.columns(len(cl_found))
             for col_w, (title, path) in zip(cf_cols, cl_found.items()):
                 with col_w:
-                    st.image(path, caption=title, use_container_width=True)
+                    st.image(path, caption=title, width="stretch")
 
         st.divider()
 
@@ -1411,7 +1411,7 @@ with t8:
                                      title="Fréquence sinistre — Violin par segment",
                                      yaxis_title="Fréquence (sin/police/an)",
                                      height=380, title_x=0.5)
-                st.plotly_chart(fig_fv, use_container_width=True)
+                st.plotly_chart(fig_fv, width="stretch")
 
             with fb:
                 freq_agg = (merged_cl.groupby("Cluster")
@@ -1431,7 +1431,7 @@ with t8:
                                      title="Fréquence moyenne par segment",
                                      yaxis_title="Fréquence moyenne",
                                      height=380, title_x=0.5)
-                st.plotly_chart(fig_fb, use_container_width=True)
+                st.plotly_chart(fig_fb, width="stretch")
 
         # ── Sévérité par cluster ──────────────────────────────────
         if HAS_SEV:
@@ -1454,7 +1454,7 @@ with t8:
                                      title="Coût sinistre — Violin par segment",
                                      yaxis_title="Coût moyen (€)",
                                      height=380, title_x=0.5)
-                st.plotly_chart(fig_sv, use_container_width=True)
+                st.plotly_chart(fig_sv, width="stretch")
 
             with sb:
                 sev_agg = (merged_cl.groupby("Cluster")
@@ -1474,7 +1474,7 @@ with t8:
                                      title="Sévérité moyenne par segment",
                                      yaxis_title="Coût moyen (€)",
                                      height=380, title_x=0.5)
-                st.plotly_chart(fig_sb, use_container_width=True)
+                st.plotly_chart(fig_sb, width="stretch")
 
         # ── Prime Pure par cluster ────────────────────────────────
         st.divider()
@@ -1495,7 +1495,7 @@ with t8:
             fig_ppv.update_layout(**LAYOUT, violinmode="group",
                                   title=f"{pp_col_cl} — Distribution par Segment",
                                   yaxis_title="Prime Pure (€/an)", height=400, title_x=0.5)
-            st.plotly_chart(fig_ppv, use_container_width=True)
+            st.plotly_chart(fig_ppv, width="stretch")
 
         # ── Profil statistique par cluster ────────────────────────
         st.divider()
@@ -1510,7 +1510,7 @@ with t8:
         profile = profile.reset_index()
         profile["Segment"] = profile["Cluster"].apply(cl_label)
         profile = profile.drop(columns=["Cluster"])
-        st.dataframe(profile, use_container_width=True, height=250)
+        st.dataframe(profile, width="stretch", height=250)
 
         # ── Distribution des features par cluster ────────────────
         st.divider()
@@ -1533,7 +1533,7 @@ with t8:
                 ))
             fig_box.update_layout(**LAYOUT, title=f"{feat_sel} — Boxplot par segment",
                                   yaxis_title=feat_sel, height=400, title_x=0.5)
-            st.plotly_chart(fig_box, use_container_width=True)
+            st.plotly_chart(fig_box, width="stretch")
 
         with fr:
             means = merged_cl.groupby("Cluster")[feat_sel].mean().reset_index()
@@ -1548,7 +1548,7 @@ with t8:
             ))
             fig_mean.update_layout(**LAYOUT, title=f"Moyenne {feat_sel} par segment",
                                    yaxis_title=f"Moyenne {feat_sel}", height=400, title_x=0.5)
-            st.plotly_chart(fig_mean, use_container_width=True)
+            st.plotly_chart(fig_mean, width="stretch")
 
         # ── Scatter BonusMalus vs DrivAge ─────────────────────────
         st.divider()
@@ -1567,7 +1567,7 @@ with t8:
         )
         fig_sc.update_traces(marker=dict(size=3))
         fig_sc.update_layout(**LAYOUT, title_x=0.5)
-        st.plotly_chart(fig_sc, use_container_width=True)
+        st.plotly_chart(fig_sc, width="stretch")
 
         # ── Client Lookup ─────────────────────────────────────────
         st.divider()
@@ -1637,7 +1637,7 @@ with t8:
                         avgs["Prime Pure moy."] = f"{cl_grp['PP_GLM'].mean():,.0f} €"
                     avgs["Polices"] = f"{len(cl_grp):,}"
                     avg_df = pd.DataFrame(list(avgs.items()), columns=["Indicateur","Valeur"])
-                    st.dataframe(avg_df, use_container_width=True, hide_index=True)
+                    st.dataframe(avg_df, width="stretch", hide_index=True)
             else:
                 st.warning("Police non trouvée dans les données de clustering.")
 
@@ -1717,7 +1717,7 @@ with t9:
                 st.dataframe(
                     udf[["Exposure","BonusMalus","DrivAge","VehAge",
                           "Predicted_Frequency","Predicted_Claims","Risk_Tier"]].head(50),
-                    use_container_width=True, height=300,
+                    width="stretch", height=300,
                 )
 
                 l,r = st.columns(2)
@@ -1726,7 +1726,7 @@ with t9:
                                             color_discrete_sequence=[C["gold"]],
                                             title="BonusMalus Distribution")
                     fig_dist.update_layout(**LAYOUT, title_x=0.5, height=300)
-                    st.plotly_chart(fig_dist, use_container_width=True)
+                    st.plotly_chart(fig_dist, width="stretch")
                 with r:
                     tc = udf["Risk_Tier"].value_counts().reset_index()
                     tc.columns = ["Tier","Count"]
@@ -1735,7 +1735,7 @@ with t9:
                                     title="Risk Segmentation")
                     fig_pie.update_layout(paper_bgcolor="#f8f9fa", font_color="#212529",
                                           title_x=0.5, height=300)
-                    st.plotly_chart(fig_pie, use_container_width=True)
+                    st.plotly_chart(fig_pie, width="stretch")
 
                 st.download_button(
                     "Download scored portfolio CSV",
